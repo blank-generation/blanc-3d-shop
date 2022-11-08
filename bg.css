@@ -1,0 +1,70 @@
+:root {
+  /* default 100px */
+ --bg_size: 100px;
+ --bg_Isize: -100px;
+}
+html {
+    height: 100%;
+    /* overflow: hidden; */
+  }
+  
+  body {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(#394951 25%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 50%, #394951 100%);
+  }
+  
+  .wrap {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 0 auto;
+    perspective: 360px;
+    perspective-origin: 50% 50%;
+    z-index: -1;
+  }
+  
+  .top-plane, .bottom-plane {
+    width: 200%;
+    height: 130%;
+    position: absolute;
+    bottom: -30%;
+    left: -50%;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.4) 2px, transparent 2px), -webkit-linear-gradient(left, rgba(255, 255, 255, 0.4) 2px, transparent 2px);
+    background-size: var(--bg_size) var(--bg_size),var(--bg_size) var(--bg_size);
+    background-position: -1px -1px,-1px -1px;
+    transform: rotateX(85deg);
+    animation: planeMoveTop 2s infinite linear;
+    z-index: -1;
+  }
+  
+  .bottom-plane {
+    transform: rotateX(-85deg);
+    top: -30%;
+    animation: planeMoveBot 2s infinite linear;
+    z-index: -1;
+  }
+  
+  @keyframes planeMoveTop {
+    from {
+      background-position: 0px var(--bg_Isize),0px 0px;
+    }
+    to {
+      background-position: 0px 0px, var(--bg_size) 0px;
+    }
+  }
+  @keyframes planeMoveBot {
+    from {
+      background-position: 0px 0px,0px 0px;
+    }
+    to {
+      background-position: 0px  var(--bg_Isize), var(--bg_size) 0px;
+    }
+  }
+  @media (max-height: 350px) {
+    .wrap {
+      perspective: 210px;
+    }
+  }
+  
