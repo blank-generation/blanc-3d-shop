@@ -20,11 +20,14 @@
     <img id="blanc-logo" src="https://cdn.shopify.com/s/files/1/0584/4005/6970/files/logo.png" />
 
     <div id="arrows">
-        <button onclick="cycleModel(-1)" id="right-arrow"><img src="./assets/ir.png" alt=""></button>
-        <button onclick="cycleModel(1)" id="left-arrow"><img src="./assets/ir.png" alt=""></button>
+        <button onclick="cycleModel(-1)" id="right-arrow"><img
+                src="https://cdn.shopify.com/s/files/1/0584/4005/6970/files/ir.png" alt=""></button>
+        <button onclick="cycleModel(1)" id="left-arrow"><img
+                src="https://cdn.shopify.com/s/files/1/0584/4005/6970/files/ir.png" alt=""></button>
     </div>
+
     <div class="tBtn">
-        <a href="#">
+        <a href="https://blancaesthetic.myshopify.com/search?type=product&q=Men's + Basil + T-+Shirt">
             <button> Go to Product</button>
         </a>
     </div>
@@ -55,6 +58,28 @@
         <h3> <span id="dyGender">Men's </span> <span id="dyColor">Basil </span> <span id="dyName"> T-Shirt </span> </h3>
     </div>
 
+    <div class="preloader-1" id="modelLoad">
+        <div>Loading</div>
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+        <span class="line line-4"></span>
+        <span class="line line-5"></span>
+        <span class="line line-6"></span>
+        <span class="line line-7"></span>
+        <span class="line line-8"></span>
+        <span class="line line-9"></span>
+    </div>
+
+    <div id="closeButton">
+        <button type="button" class="btn-close" onclick="history.back()">
+            <span class="icon-cross"></span>
+            <span class="visually-hidden">Close</span>
+          </button>
+          
+    </div>
+
+
     <!-- <div class="cont">
         <div class="rightCont">
             <div class="tmenu">
@@ -72,18 +97,39 @@
 
     </style>
 
-    <script  src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
-    <script  src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.min.js"></script>
 
 
     <script type="module">
 
         const modelMap = ["Joggers", "T-Shirt", "Polo", "Shorts"];
-        const linkMap = {"Men's Basil T-Shirt" : ""}
-
+        const linkMap = { "Men's Basil T-Shirt": "" }
         const scene = new THREE.Scene();
-        const loader = new THREE.GLTFLoader();
         const ModelParent = new THREE.Group();
+        const manager = new THREE.LoadingManager();
+        // const url = 'https://blank-generation.github.io/blanc-3d-shop/assets/all.glb';
+        const modelLoad = document.getElementById('modelLoad');
+        manager.onStart = function (url) {
+
+            console.log('Started loading file: ' + url + '.\nLoaded ' + ' files.');
+
+        };
+
+        manager.onProgress = function (url, loaded, total) {
+
+            // console.log('Loading file: ' + url + '.\loaded '  + ' of ' + total + ' files.');
+            // modelLoad.value = (loaded/total) * 100;
+
+        };
+        manager.onLoad = function () {
+
+            console.log('Loading complete!');
+            modelLoad.style.display = 'none'
+
+        };
+
+        const loader = new THREE.GLTFLoader(manager);
 
         const wLabel = new THREE.Color('#ffffff');
         const bLabel = new THREE.Color('#000000');
@@ -240,7 +286,7 @@
 
             //       -------------------- Loading the model-------------------------------
 
-            loader.load('./assets/all.glb', function (gltf) {
+            loader.load('https://cdn.shopify.com/s/files/1/0584/4005/6970/files/allc.glb', function (gltf) {
 
 
                 mMods.push(gltf.scene.getObjectByName('joggers'));
@@ -295,14 +341,14 @@
 
                     if (transitionExit && ModelParent.position.x < 10) {
                         ModelParent.position.x += 0.3;
-                    } else if (transitionExit && ModelParent.position.x >= 10){
+                    } else if (transitionExit && ModelParent.position.x >= 10) {
                         transitionExit = false;
                         ModelParent.position.x = -10;
-                     
+
                     } else if (!transitionExit && ModelParent.position.x < -0.1) {
                         ModelParent.position.x += 0.3;
 
-                     
+
                     } else if (!transitionExit && ModelParent.position.x < 0) {
                         ModelParent.position.x += 0.01;
                     }
@@ -334,7 +380,7 @@
                         if (ModelParent.children[2].name === 'mpolo') {
                             ModelParent.children[2].children[2].material.color = clothCol;
                         }
-             
+
 
                     }
 
